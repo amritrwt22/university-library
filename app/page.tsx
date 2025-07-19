@@ -1,4 +1,6 @@
 import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Avatar } from '@radix-ui/react-avatar';
 
 const HomePage: React.FC = () => {
     return (
@@ -12,6 +14,7 @@ const HomePage: React.FC = () => {
                     <li><a href="/about">About Us</a></li>
                 </ul>
             </nav>
+            <Button>click me</Button>
         </div>
     );
 };
