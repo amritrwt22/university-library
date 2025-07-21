@@ -24,9 +24,9 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
-import ImageUpload from "@/components/ImageUpload";
+import ImageUpload from "@/components/ImageUpload"; //using imagekit for id image upload
 // import FileUpload from "@/components/FileUpload";
-// import { toast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
 // this interface defines the props for the AuthForm component
@@ -58,22 +58,22 @@ const AuthForm = <T extends FieldValues>({
   const handleSubmit: SubmitHandler<T> = async (data) => {
     const result = await onSubmit(data);
 
-    // if (result.success) {
-    //   toast({
-    //     title: "Success",
-    //     description: isSignIn
-    //       ? "You have successfully signed in."
-    //       : "You have successfully signed up.",
-    //   });
+    if (result.success) {
+      toast({
+        title: "Success",
+        description: isSignIn
+          ? "You have successfully signed in."
+          : "You have successfully signed up.",
+      });
 
-    //   router.push("/");
-    // } else {
-    //   toast({
-    //     title: `Error ${isSignIn ? "signing in" : "signing up"}`,
-    //     description: result.error ?? "An error occurred.",
-    //     variant: "destructive",
-    //   });
-    // }
+      router.push("/");
+    } else {
+      toast({
+        title: `Error ${isSignIn ? "signing in" : "signing up"}`,
+        description: result.error ?? "An error occurred.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -103,15 +103,15 @@ const AuthForm = <T extends FieldValues>({
                   </FormLabel>
                   <FormControl>
                     {field.name === "universityCard" ? (
-                      <ImageUpload/>
-                      // <FileUpload
-                      //   type="image"
-                      //   accept="image/*"
-                      //   placeholder="Upload your ID"
-                      //   folder="ids"
-                      //   variant="dark"
-                      //   onFileChange={field.onChange}
-                      // />
+                      // Using ImageUpload component for universityCard field
+                      <ImageUpload
+                        type="image"
+                        accept="image/*"
+                        placeholder="Upload your ID"
+                        folder="ids"
+                        variant="dark"
+                        onFileChange={field.onChange}
+                      />
                     ) : (
                       <Input
                         required
