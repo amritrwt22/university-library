@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-// import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/toaster";
 
 import localFont from "next/font/local";
 import { ReactNode } from "react";
@@ -40,7 +40,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
         >
           {children}
 
-          {/* <Toaster /> */}
+          <Toaster />
         </body>
       {/* </SessionProvider> */}
     </html>
