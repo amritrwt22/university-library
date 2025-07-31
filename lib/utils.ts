@@ -4,6 +4,16 @@ import { twMerge } from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+// this function is used to get the initials from a name
+// shown in Avatar component
+export const getInitials = (name: string): string => name
+  .split(" ")
+  .map((n) => n[0])
+  .join("")
+  .toUpperCase()
+.slice(0, 2)
+
 /*
 Purpose:
 This file contains common TypeScript/JavaScript utility functions used by Shadcn UI components
