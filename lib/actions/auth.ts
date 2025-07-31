@@ -5,9 +5,9 @@ import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import { hash } from "bcryptjs";
 import { signIn } from "@/auth";
-// import { headers } from "next/headers";
-// import ratelimit from "@/lib/ratelimit";
-// import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import ratelimit from "@/lib/ratelimit";
+import { redirect } from "next/navigation";
 // import { workflowClient } from "@/lib/workflow";
 import config from "@/lib/config";
 
@@ -19,11 +19,13 @@ export const signInWithCredentials = async (
 ) => {
   // Pick allows us to select only the email and password properties from AuthCredentials type
   const { email, password } = params; // destructuring the params object to get email and password
-
-  // const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
-  // const { success } = await ratelimit.limit(ip);
-
-  // if (!success) return redirect("/too-fast");
+  
+  // Get the IP address from the request headers
+  const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+  // if request to signin is in limit, it will return success as true, otherwise false
+  const { success } = await ratelimit.limit(ip);
+  // if the request is not within the rate limit, redirect to /too-fast page
+  if (!success) return redirect("/too-fast");
 
   try {
     // Use NextAuth's signIn function to authenticate the user
@@ -56,10 +58,11 @@ export const signUp = async (params: AuthCredentials) => {
   // destructuring the params object 
   const { fullName, email, universityId, password, universityCard } = params;
 
-  // const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
-  // const { success } = await ratelimit.limit(ip);
+  const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+  // ratelimit.limit is a function that checks if the request is within the rate limit
+  const { success } = await ratelimit.limit(ip); // if it is in limit it returns success as true, otherwise false
 
-  // if (!success) return redirect("/too-fast");
+  if (!success) return redirect("/too-fast"); // if the request is not within the rate limit, redirect to /too-fast page
 
   // Check if user already exists
   const existingUser = await db
