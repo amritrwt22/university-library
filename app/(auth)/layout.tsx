@@ -1,12 +1,14 @@
 import { ReactNode } from "react";
 import Image from "next/image";
-// import { auth } from "@/auth";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
-  // const session = await auth();
-
-  // if (session) redirect("/");
+  // This layout is used for the authentication pages (sign-in, sign-up, etc.)
+  const session = await auth();
+  // if the user is already authenticated, redirect them to the home page
+  // user wont be able to see sign-in or sign-up pages if they are already logged in
+  if (session) redirect("/");
 
   return (
     <main className="auth-container">

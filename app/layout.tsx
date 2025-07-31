@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import localFont from "next/font/local";
 import { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
-// import { auth } from "@/auth";
+import { auth } from "@/auth";
 
 const ibmPlexSans = localFont({
   src: [
@@ -30,11 +30,14 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = async ({ children }: { children: ReactNode }) => {
-//   const session = await auth();
+  // Fetch the current session from NextAuth.js and provide it to the SessionProvider
+  const session = await auth(); 
+  // a session is an object that contains information about the authenticated user, such as their ID, name, and email.
+  // sessionprovider is a component that provides the session to the rest of the application, allowing us to access the session in any component using the useSession hook.
 
   return (
     <html lang="en">
-      {/* <SessionProvider session={session}> */}
+      <SessionProvider session={session}>
         <body
           className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}
         >
@@ -42,7 +45,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
 
           <Toaster />
         </body>
-      {/* </SessionProvider> */}
+      </SessionProvider>
     </html>
   );
 };
