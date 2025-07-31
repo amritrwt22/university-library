@@ -24,6 +24,7 @@ interface Book {
   isLoanedBook: boolean;
 }
 
+// interface for auth.ts file params
 interface AuthCredentials {
   fullName: string;
   email: string;
