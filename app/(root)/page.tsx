@@ -5,7 +5,7 @@ import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 
 const Home = async () => {
-  //   const session = await auth();
+    // const session = await auth();
 
   //   const latestBooks = (await db
   //     .select()

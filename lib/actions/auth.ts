@@ -11,15 +11,13 @@ import { redirect } from "next/navigation";
 // import { workflowClient } from "@/lib/workflow";
 import config from "@/lib/config";
 
-
-
 // this function is used to sign in the user with credentials
 export const signInWithCredentials = async (
   params: Pick<AuthCredentials, "email" | "password">
 ) => {
   // Pick allows us to select only the email and password properties from AuthCredentials type
   const { email, password } = params; // destructuring the params object to get email and password
-  
+
   // Get the IP address from the request headers
   const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
   // if request to signin is in limit, it will return success as true, otherwise false
@@ -42,20 +40,15 @@ export const signInWithCredentials = async (
 
     // If sign-in is successful, return success
     return { success: true };
-
   } catch (error) {
     console.log(error, "Signin error");
     return { success: false, error: "Signin error" };
   }
 };
 
-
-
-
-
 // this function is used to sign up the user with credentials
 export const signUp = async (params: AuthCredentials) => {
-  // destructuring the params object 
+  // destructuring the params object
   const { fullName, email, universityId, password, universityCard } = params;
 
   const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
@@ -99,7 +92,6 @@ export const signUp = async (params: AuthCredentials) => {
     // Sign in the user automatically after signup
     await signInWithCredentials({ email, password });
     return { success: true };
-    
   } catch (error) {
     console.log(error, "Signup error");
     return { success: false, error: "Signup error" };
