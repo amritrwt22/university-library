@@ -20,6 +20,9 @@ export const BORROW_STATUS_ENUM = pgEnum("borrow_status", [
   "RETURNED",
 ]);
 
+// here the lastactivitydate is used to track the last time the user was active in the system
+// if user has not been active for a long time, we can send them a reminder email or notification
+// here we will send in 3 days after the last activity date
 export const users = pgTable("users", {
   id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
   fullName: varchar("full_name", { length: 255 }).notNull(),

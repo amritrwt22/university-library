@@ -8,7 +8,7 @@ import { signIn } from "@/auth";
 import { headers } from "next/headers";
 import ratelimit from "@/lib/ratelimit";
 import { redirect } from "next/navigation";
-// import { workflowClient } from "@/lib/workflow";
+import { workflowClient } from "@/lib/workflow";
 import config from "@/lib/config";
 
 // this function is used to sign in the user with credentials
@@ -81,13 +81,13 @@ export const signUp = async (params: AuthCredentials) => {
     });
 
     // Trigger the onboarding workflow after successful signup
-    // await workflowClient.trigger({
-    //   url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
-    //   body: {
-    //     email,
-    //     fullName,
-    //   },
-    // });
+    await workflowClient.trigger({
+      url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
+      body: {
+        email,
+        fullName,
+      },
+    });
 
     // Sign in the user automatically after signup
     await signInWithCredentials({ email, password });
