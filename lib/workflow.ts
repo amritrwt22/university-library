@@ -37,7 +37,7 @@ export const sendEmail = async ({
       provider: resend({ token: config.env.resendToken }),
     },
     body: {
-      from: "Amrit Rawat <contact@adrianjsmastery.com>", // make a email from your own domain, add here
+      from: "Amrit Rawat <sdfghjk>", // make a email from your own domain, add here
       to: [email],
       subject,
       html: message,
