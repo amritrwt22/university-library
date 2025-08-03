@@ -1,5 +1,5 @@
 "use server";
-
+import { compare } from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
@@ -15,30 +15,44 @@ import config from "@/lib/config";
 export const signInWithCredentials = async (
   params: Pick<AuthCredentials, "email" | "password">
 ) => {
-  // Pick allows us to select only the email and password properties from AuthCredentials type
-  const { email, password } = params; // destructuring the params object to get email and password
+  const { email, password } = params;
 
   // Get the IP address from the request headers
   const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
-  // if request to signin is in limit, it will return success as true, otherwise false
   const { success } = await ratelimit.limit(ip);
-  // if the request is not within the rate limit, redirect to /too-fast page
   if (!success) return redirect("/too-fast");
 
   try {
-    // Use NextAuth's signIn function to authenticate the user
+    // 1. Look up the user in the database
+    const userArr = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
+
+    if (userArr.length === 0) {
+      return { success: false, error: "No user found with this email. Please sign up." };
+    }
+
+    const user = userArr[0];
+
+    // 2. Check the password
+    const isPasswordValid = await compare(password, user.password);
+    if (!isPasswordValid) {
+      return { success: false, error: "Invalid password. Please try again." };
+    }
+
+    // 3. Credentials valid: let NextAuth handle the session etc.
     const result = await signIn("credentials", {
       email,
       password,
-      redirect: false, // we don't want to redirect immediately to the dashboard
+      redirect: false,
     });
 
-    // result? checks if result is not null or undefined before accessing the error property
     if (result?.error) {
       return { success: false, error: result.error };
     }
 
-    // If sign-in is successful, return success
     return { success: true };
   } catch (error) {
     console.log(error, "Signin error");
