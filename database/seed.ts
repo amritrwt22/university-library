@@ -65,3 +65,6 @@ const seed = async () => {
 };
 
 seed();
+// this file seeds the database with dummy book data
+// use command `npx tsx database/seed.ts` to run this file
+// uses dummybooks.json as the source of data

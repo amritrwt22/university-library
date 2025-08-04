@@ -38,6 +38,7 @@ export const users = pgTable("users", {
   }).defaultNow(),
 });
 
+// this table is used to store the books in the library
 export const books = pgTable("books", {
   id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
   title: varchar("title", { length: 255 }).notNull(),
@@ -54,6 +55,7 @@ export const books = pgTable("books", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
 
+// this table is used to store the borrow records of the books
 export const borrowRecords = pgTable("borrow_records", {
   id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
   userId: uuid("user_id")

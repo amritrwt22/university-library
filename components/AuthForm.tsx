@@ -1,20 +1,33 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DefaultValues,FieldValues,Path,SubmitHandler,useForm,UseFormReturn,} from "react-hook-form";
+import {
+  DefaultValues,
+  FieldValues,
+  Path,
+  SubmitHandler,
+  useForm,
+  UseFormReturn,
+} from "react-hook-form";
 import { ZodType } from "zod";
 
 import { Button } from "@/components/ui/button";
-import {Form,FormControl,FormDescription,FormField,FormItem,FormLabel,FormMessage,} from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
-import ImageUpload from "@/components/ImageUpload"; //using imagekit for id image upload
+import FileUpload from "@/components/FileUpload"; //using imagekit for id image upload
 // import FileUpload from "@/components/FileUpload";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-
-
 
 // this interface defines the props for the AuthForm component
 interface Props<T extends FieldValues> {
@@ -23,9 +36,6 @@ interface Props<T extends FieldValues> {
   onSubmit: (data: T) => Promise<{ success: boolean; error?: string }>;
   type: "SIGN_IN" | "SIGN_UP";
 }
-
-
-
 
 // <T extends FieldValues> is a generic type that allows the component to accept any type of form data, making it flexible for different forms.
 // anydata means that the form can accept any type of data structure, as long as it conforms to the Zod schema provided in the props.
@@ -41,19 +51,18 @@ const AuthForm = <T extends FieldValues>({
 
   // isSignIn is a boolean that indicates whether the form is for signing in or signing up.
   const isSignIn = type === "SIGN_IN";
-  
+
   // useForm is a hook from react-hook-form that provides methods and properties to manage form state and validation.
   const form: UseFormReturn<T> = useForm({
     resolver: zodResolver(schema),
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
-  // this function handles the sign-in or sign-up form submission 
+  // this function handles the sign-in or sign-up form submission
   const handleSubmit: SubmitHandler<T> = async (data) => {
-    
     //onSubmit is a function that takes the form data as an argument and returns a promise that resolves to an object with success and error properties.
     const result = await onSubmit(data); // onSubmit is a prop function passed to the AuthForm component, which is called when the form is submitted.
-    
+
     // result is an object that contains the success status and an optional error message.
     if (result.success) {
       toast({
@@ -62,13 +71,13 @@ const AuthForm = <T extends FieldValues>({
           ? "You have successfully signed in."
           : "You have successfully signed up.",
       });
-   
+
       router.push("/"); // Redirect to the home page after successful sign-in or sign-up
     } else {
       toast({
         title: `Error ${isSignIn ? "signing in" : "signing up"}`,
         description: result.error ?? "An error occurred.",
-        variant: "destructive", 
+        variant: "destructive",
       });
     }
   };
@@ -100,8 +109,8 @@ const AuthForm = <T extends FieldValues>({
                   </FormLabel>
                   <FormControl>
                     {field.name === "universityCard" ? (
-                      // Using ImageUpload component for universityCard field
-                      <ImageUpload
+                      // Using FileUpload component for universityCard field
+                      <FileUpload
                         type="image"
                         accept="image/*"
                         placeholder="Upload your ID"
@@ -118,7 +127,7 @@ const AuthForm = <T extends FieldValues>({
                         {...field}
                         className="form-input"
                       />
-                    )}        
+                    )}
                   </FormControl>
                   <FormMessage />
                 </FormItem>

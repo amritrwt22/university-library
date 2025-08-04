@@ -2,6 +2,7 @@
 this component contains constants and sample data used throughout the application
 */
 
+// navigationLinks is an array of objects that contains the href and label for the navigation links
 export const navigationLinks = [
   {
     href: "/library",
@@ -16,6 +17,7 @@ export const navigationLinks = [
   },
 ];
 
+// adminSideBarLinks is an array of objects that contains the img, route, and text for the admin sidebar
 export const adminSideBarLinks = [
   {
     img: "/icons/admin/home.svg",
@@ -44,6 +46,7 @@ export const adminSideBarLinks = [
   },
 ];
 
+// FIELD_NAMES is an object that contains the field names for the sign up form
 export const FIELD_NAMES = {
   fullName: "Full name",
   email: "Email",
@@ -52,6 +55,7 @@ export const FIELD_NAMES = {
   universityCard: "Upload University ID Card",
 };
 
+// FIELD_TYPES is an object that contains the field types for the sign up form
 export const FIELD_TYPES = {
   fullName: "text",
   email: "email",
@@ -59,6 +63,7 @@ export const FIELD_TYPES = {
   password: "password",
 };
 
+// sampleBooks is an array of objects that contains sample book data
 export const sampleBooks = [
   {
     id: 1,

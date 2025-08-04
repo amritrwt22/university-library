@@ -11,11 +11,11 @@ const {
 const imagekit = new ImageKit({ publicKey, privateKey, urlEndpoint });
 
 export async function GET() {
-  return NextResponse.json(imagekit.getAuthenticationParameters() );
+  return NextResponse.json(imagekit.getAuthenticationParameters());
 }
 
 // this file handles the authentication for ImageKit
 // it exports a GET route that returns the authentication parameters needed for ImageKit
-// this is used in the ImageUpload component to upload images and videos
+// this is used in the FileUpload component to upload images and videos
 // the authentication parameters include a signature, expire time, and token
-// the ImageUpload component uses these parameters to upload files to ImageKit
+// the FileUpload component uses these parameters to upload files to ImageKit

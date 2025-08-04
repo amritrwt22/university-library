@@ -7,21 +7,38 @@ typescript interfaces and types are used to define the structure of objects.
 
 typescript interface is a way to define the shape of an object, including its properties and their types.
 */
+// interface Book {
+//   id: string;
+//   title: string;
+//   author: string;
+//   genre: string;
+//   rating: number;
+//   total_copies: number;
+//   available_copies: number;
+//   description: string;
+//   color: string;
+//   cover: string;
+//   videoUrl: string;
+//   summary: string;
+//   createdAt: Date | null;
+//   isLoanedBook: boolean;
+// }
+// use this below one when fetching from database
 interface Book {
   id: string;
   title: string;
   author: string;
   genre: string;
   rating: number;
-  total_copies: number;
-  available_copies: number;
+  totalCopies: number;
+  availableCopies: number;
   description: string;
-  color: string;
-  cover: string;
+  coverColor: string;
+  coverUrl: string;
   videoUrl: string;
   summary: string;
   createdAt: Date | null;
-  isLoanedBook: boolean;
+  isLoanedBook : boolean;
 }
 
 // interface for auth.ts file params
@@ -33,6 +50,7 @@ interface AuthCredentials {
   universityCard: string;
 }
 
+// interface for Bookparams in book creation form, used in admin/actions/book.ts
 interface BookParams {
   title: string;
   author: string;
@@ -46,6 +64,7 @@ interface BookParams {
   summary: string;
 }
 
+// interface for book borrowing params, used in actions/book.ts
 interface BorrowBookParams {
   bookId: string;
   userId: string;
