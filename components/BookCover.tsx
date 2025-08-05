@@ -25,6 +25,7 @@ interface Props {
   variant?: BookCoverVariant;
   coverColor: string;
   coverImage: string;
+  title?: string; // Add title prop
 }
 
 // this is the BookCover component, it accepts className, variant, coverColor, and coverImage as props
@@ -33,6 +34,7 @@ const BookCover = ({
   variant = "regular",  //default variant is "regular"
   coverColor = "#012B48", //default cover color
   coverImage = "https://placehold.co/400x600.png", //default cover image
+  title, // Add title prop
 }: Props) => {
   return (
     <div
@@ -54,14 +56,14 @@ const BookCover = ({
         <IKImage
           path={coverImage}
           urlEndpoint={config.env.imagekit.urlEndpoint}
-          alt="Book cover"
+          alt={title || ""} // Use title prop for alt text
           fill
           className="rounded-sm object-fill"
           loading="lazy"
           lqip={{ active: true }}
         />
         <Image src={coverImage} 
-        alt="Book cover" 
+        alt={title || ""} // Use title prop for alt text
         fill 
         className="rounded-sm object-fill"/>
       </div>

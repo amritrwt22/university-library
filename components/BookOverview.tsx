@@ -2,13 +2,15 @@ import React from "react";
 import Image from "next/image";
 import BookCover from "@/components/BookCover";
 import BorrowBook from "@/components/BorrowBook";
+import ReturnBook from "@/components/ReturnBook";
 import { db } from "@/database/drizzle";
-import { users } from "@/database/schema";
-import { eq } from "drizzle-orm";
+import { users, borrowRecords } from "@/database/schema";
+import { eq, and } from "drizzle-orm";
 
 interface Props extends Book {
   userId: string;
 }
+
 export const BookOverview = async ({
   title,
   author,
@@ -28,14 +30,32 @@ export const BookOverview = async ({
     .from(users)
     .where(eq(users.id, userId))
     .limit(1);
-  // eligible if availableCopies > 0 and user status is approved
+
+  // Check if this book is currently borrowed by the user
+  const borrowedByUser = await db
+    .select()
+    .from(borrowRecords)
+    .where(
+      and(
+        eq(borrowRecords.bookId, id),
+        eq(borrowRecords.userId, userId),
+        eq(borrowRecords.status, "BORROWED")
+      )
+    )
+    .limit(1);
+
+  const isBorrowed = borrowedByUser.length > 0;
+
+  // Borrowing eligibility (only relevant if book is not already borrowed)
   const borrowingEligibility = {
-    isEligible: availableCopies > 0 && user?.status === "APPROVED",
-    message:
-      availableCopies <= 0
-        ? "Book is not available"
-        : "You are not eligible to borrow this book",
+    isEligible: availableCopies > 0 && user?.status === "APPROVED" && !isBorrowed,
+    message: isBorrowed 
+      ? "You have already borrowed this book"
+      : availableCopies <= 0
+      ? "Book is not available"
+      : "You are not eligible to borrow this book",
   };
+
   return (
     <section className="book-overview">
       <div className="flex flex-1 flex-col gap-5">
@@ -70,11 +90,21 @@ export const BookOverview = async ({
         <p className="book-description">{description}</p>
 
         {user && (
-          <BorrowBook
-            bookId={id}
-            userId={userId}
-            borrowingEligibility={borrowingEligibility}
-          />
+          isBorrowed ? (
+            // Show Return Book button if user has borrowed this book
+            <ReturnBook
+              bookId={id}
+              userId={userId}
+              bookTitle={title}
+            />
+          ) : (
+            // Show Borrow Book button if user hasn't borrowed this book
+            <BorrowBook
+              bookId={id}
+              userId={userId}
+              borrowingEligibility={borrowingEligibility}
+            />
+          )
         )}
       </div>
 
