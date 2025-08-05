@@ -8,6 +8,8 @@ import Header from "@/components/admin/Header";
 import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import { eq } from "drizzle-orm";
+import { Toast } from "@/components/ui/toast";
+import DemoAccessNotice from "@/components/admin/DemoAccessNotice";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
   const session = await auth(); // auth is a function that fetches the current session from NextAuth.js
@@ -23,7 +25,10 @@ const Layout = async ({ children }: { children: ReactNode }) => {
     .then((res) => res[0]?.isAdmin === "ADMIN");
 
   // If the user is not an admin, redirect to the home page
-  if (!isAdmin) redirect("/");
+  // if (!isAdmin) redirect("/");
+  if (!isAdmin) {
+    return <DemoAccessNotice />;
+  }
 
   return (
     <main className="flex min-h-screen w-full flex-row">
