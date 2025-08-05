@@ -69,3 +69,26 @@ interface BorrowBookParams {
   bookId: string;
   userId: string;
 }
+
+interface user {
+  id: string;
+  fullName: string;
+  email: string;
+  universityId: number;
+  universityCard: string;
+  status: "PENDING" | "APPROVED" | "REJECTED"| "NULL";
+  role: "USER" | "ADMIN";
+  lastActivityDate: Date | null;
+  createdAt: Date | null;
+}
+
+interface BorrowRecord  {
+  id: string;
+  userId: string;
+  bookId: string;
+  borrowDate: Date | null;
+  dueDate: Date | null;
+  returnDate: Date | null;
+  status: "BORROWED" | "RETURNED";
+  createdAt: Date | null;
+}

@@ -11,6 +11,7 @@ import { redirect } from "next/navigation";
 import { workflowClient } from "@/lib/workflow";
 import config from "@/lib/config";
 
+
 // this function is used to sign in the user with credentials
 export const signInWithCredentials = async (
   params: Pick<AuthCredentials, "email" | "password">
@@ -92,6 +93,7 @@ export const signUp = async (params: AuthCredentials) => {
       universityId,
       password: hashedPassword,
       universityCard,
+      status: "PENDING", // Set initial status to PENDING
     });
 
     // Trigger the onboarding workflow after successful signup
