@@ -37,7 +37,7 @@ const StudentDetails = ({
   // Status helpers
   const isVerified = status === "APPROVED";
   const isRejected = status === "REJECTED";
-  // const isPending = status === "PENDING";
+  const isPending = status === "PENDING";
 
   // Status colors and text
   const getStatusInfo = () => {

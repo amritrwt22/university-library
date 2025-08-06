@@ -30,7 +30,7 @@ interface BorrowRequestsListProps {
 const BorrowRequestsList = ({ requests }: BorrowRequestsListProps) => {
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-200">
-      <SectionHeader title="Borrow Requests" viewAllLink="/admin/requests/borrow" />
+      <SectionHeader title="Borrow Requests" viewAllLink="/admin/borrowRequests" />
       
       <div className="space-y-4">
         {requests.slice(0, 3).map((request) => (

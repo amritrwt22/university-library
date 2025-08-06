@@ -72,7 +72,7 @@ const AccountRequestsList = ({ requests }: AccountRequestsListProps) => {
 
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-200">
-      <SectionHeader title="Account Requests" viewAllLink="/admin/requests/account" />
+      <SectionHeader title="Account Requests" viewAllLink="/admin/accountRequests" />
       
       {/* 3-Column Grid */}
       <div className="grid grid-cols-3 gap-4">
