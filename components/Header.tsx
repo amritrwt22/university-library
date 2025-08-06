@@ -42,10 +42,10 @@ export const Header = ({ session }: { session: Session }) => {
 
         <li>
         <Link 
-          href="/library" 
+          href="/search" 
           className={cn(
             "text-base cursor-pointer capitalize text-light-100 hover:text-white transition-colors",
-            pathname === "/library" && "text-white font-semibold"
+            pathname === "/search" && "text-white font-semibold"
           )}
         >
           Search
