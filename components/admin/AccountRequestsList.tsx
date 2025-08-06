@@ -3,7 +3,7 @@
 import React from "react";
 import SectionHeader from "./SectionHeader";
 import UserCard from "./UserCard";
-import { approveUser, rejectUser } from "@/lib/admin/actions/request";
+import { approveUser, rejectUser } from "@/lib/admin/actions/userRequest";
 import { useToast } from "@/hooks/use-toast";
 
 interface AccountRequest {

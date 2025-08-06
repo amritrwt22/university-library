@@ -4,7 +4,7 @@ import UsersTable from "@/components/admin/users/UserTable";
 import { db } from "@/database/drizzle";
 import { users, borrowRecords } from "@/database/schema";
 import { desc, eq, count } from "drizzle-orm";
-import { updateUserRole, deleteUser } from "@/lib/admin/actions/users";
+import { updateUserRole, deleteUser } from "@/lib/admin/actions/updateUsers";
 
 interface UserWithBorrowCount {
     id: string;
